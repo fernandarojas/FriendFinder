@@ -32,16 +32,21 @@ module.exports = function(app) {
             
                 if (scoreDifference <= bestMatch.friendDifference) { 
 
-                    bestMatch.name = friends[i].name;
-                    bestMatch.photo = friends[i].photo; 
-                    bestMatch.friendDifference = scoreDifference;
+                    matchName = friends[i].name;
+                    matchImage = friends[i].photo; 
                 }
             }
         };
 
         friends.push(userData);
 
-        res.json(bestMatch);
+        res.json(
+            { 
+                status: "OK", 
+                matchName: matchName, 
+                matchImage: matchImage
+            }
+        );
 
     });
 
