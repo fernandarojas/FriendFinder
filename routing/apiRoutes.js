@@ -18,7 +18,7 @@ module.exports = function(app) {
         var userData = req.body;
         var userName = userData.name;
         var userPhoto = userData.photo;
-        var userScore = userData.score;
+        var userScore = userData.scores;
 
         var scoreDifference = 0;
 
@@ -32,8 +32,8 @@ module.exports = function(app) {
             
                 if (scoreDifference <= bestMatch.friendDifference) { 
 
-                    matchName = friends[i].name;
-                    matchImage = friends[i].photo; 
+                    var matchName = friends[i].name;
+                    var matchImage = friends[i].photo; 
                 }
             }
         };
