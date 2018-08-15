@@ -188,26 +188,31 @@
         </footer>
 
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title"><strong>Best Match</strong></h2>
-            </div>
-            <div class="modal-body">
-                <h2 id="match-name"></h2>
-                <img id="match-img" src="https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg" alt="" height="300" width="340">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div id="match-modal" class="modal fade" role="dialog">
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                </div>
+                <div class="modal-body">
+                    <h2 id="match-name"></h2>
+                    <img id="match-img">
+                </div
+                ><div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
+
+
 </body>
 </html>
 
 <script type ="text/javascript">
   
-
     // Capture the form inputs
     $("#submit").on("click", function(event) {
         event.preventDefault();
@@ -221,15 +226,13 @@
                 }
             });
 
-            $(".chosen-select").each(function() {
-
+            $(".custom-select").each(function() {
                 if ($(this).val() === "") {
-                isValid = false;
+                    isValid = false;
                 }
             });
-
             return isValid;
-        }
+        };
 
       // If all required fields are filled
         if (validateForm()) {
@@ -251,17 +254,18 @@
                 ]
             };
 
+            var currentURL = window.location.origin;
         // AJAX post the data to the friends API.
-            $.post("/api/friends", userData, function(data) {
+            $.post(currentURL + "/api/friends", userData, function(data) {
 
             // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-                $("#match-name").text(data.matchName);
-                $("#match-img").attr("src", data.matchImage);
+                $("#match-name").text(data.name);
+                $("#match-img").attr("src", data.photo);
 
             // Show the modal with the best match
-                $("#results-modal").modal("open");
+                $("#match-modal").modal("toggle");
 
-        });
+            });
 
         } else {
             alert("Please fill out all fields before submitting!");
